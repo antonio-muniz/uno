@@ -1,0 +1,28 @@
+package card
+
+import (
+	"github.com/antonio-muniz/uno/game/card/action"
+	"github.com/antonio-muniz/uno/game/card/color"
+)
+
+type ReverseCard struct {
+	color color.Color
+}
+
+func NewReverseCard(color color.Color) ReverseCard {
+	return ReverseCard{color: color}
+}
+
+func (c ReverseCard) Actions() []action.Action {
+	return []action.Action{
+		action.NewReverseTurnsAction(),
+	}
+}
+
+func (c ReverseCard) Color() color.Color {
+	return c.color
+}
+
+func (c ReverseCard) String() string {
+	return c.color.Paint("[<=>]")
+}
