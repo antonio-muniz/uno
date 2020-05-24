@@ -25,6 +25,11 @@ func (c WildDrawFourCard) Color() color.Color {
 	return c.color
 }
 
+func (c WildDrawFourCard) Equal(other Card) bool {
+	_, typeMatched := other.(WildDrawFourCard)
+	return typeMatched
+}
+
 func (c WildDrawFourCard) String() string {
 	return c.color.Paint("[+4!]")
 }

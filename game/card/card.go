@@ -8,5 +8,6 @@ import (
 type Card interface {
 	Actions() []action.Action
 	Color() color.Color
+	Equal(other Card) bool
 	String() string
 }

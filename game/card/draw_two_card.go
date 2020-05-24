@@ -24,6 +24,11 @@ func (c DrawTwoCard) Color() color.Color {
 	return c.color
 }
 
+func (c DrawTwoCard) Equal(other Card) bool {
+	_, typeMatched := other.(DrawTwoCard)
+	return typeMatched && c.color == other.Color()
+}
+
 func (c DrawTwoCard) String() string {
 	return c.color.Paint("[+2!]")
 }

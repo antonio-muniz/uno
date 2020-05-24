@@ -25,6 +25,11 @@ func (c NumberCard) Color() color.Color {
 	return c.color
 }
 
+func (c NumberCard) Equal(other Card) bool {
+	otherNumberCard, typeMatched := other.(NumberCard)
+	return typeMatched && c.color == other.Color() && c.number == otherNumberCard.number
+}
+
 func (c NumberCard) Number() int {
 	return c.number
 }

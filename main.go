@@ -17,7 +17,7 @@ var botNames = []string{
 	"Darius",
 	"Elise",
 	"Fizz",
-	"Irelia",
+	"Galio",
 }
 
 func main() {

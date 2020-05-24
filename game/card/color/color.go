@@ -1,6 +1,7 @@
 package color
 
 import (
+	"fmt"
 	"io"
 
 	"github.com/fatih/color"
@@ -64,6 +65,10 @@ var colors = map[string]Color{
 	Black.name:  Black,
 }
 
-func ByName(name string) Color {
-	return colors[name]
+func ByName(name string) (Color, error) {
+	color := colors[name]
+	if color == nil {
+		return nil, fmt.Errorf("invalid color '%s'", name)
+	}
+	return color, nil
 }

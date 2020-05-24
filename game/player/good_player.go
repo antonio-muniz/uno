@@ -48,7 +48,7 @@ func (p goodPlayer) PickColor(gameState game.GameState) color.Color {
 	return mostFrequentColor
 }
 
-func (p goodPlayer) Play(playableCards map[int]card.Card, gameState game.GameState) int {
+func (p goodPlayer) Play(playableCards []card.Card, gameState game.GameState) card.Card {
 	mostDiscardableCardIndex := 0
 	maxSpareCards := 0
 
@@ -65,5 +65,5 @@ func (p goodPlayer) Play(playableCards map[int]card.Card, gameState game.GameSta
 		}
 	}
 
-	return mostDiscardableCardIndex
+	return playableCards[mostDiscardableCardIndex]
 }

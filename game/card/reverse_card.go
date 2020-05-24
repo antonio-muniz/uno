@@ -23,6 +23,11 @@ func (c ReverseCard) Color() color.Color {
 	return c.color
 }
 
+func (c ReverseCard) Equal(other Card) bool {
+	_, typeMatched := other.(ReverseCard)
+	return typeMatched && c.color == other.Color()
+}
+
 func (c ReverseCard) String() string {
 	return c.color.Paint("[<=>]")
 }

@@ -23,6 +23,11 @@ func (c SkipCard) Color() color.Color {
 	return c.color
 }
 
+func (c SkipCard) Equal(other Card) bool {
+	_, typeMatched := other.(SkipCard)
+	return typeMatched && c.color == other.Color()
+}
+
 func (c SkipCard) String() string {
 	return c.color.Paint("[(/)]")
 }

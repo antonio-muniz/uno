@@ -7,8 +7,8 @@ import (
 
 type Player interface {
 	Name() string
-	PickColor(GameState) color.Color
-	Play(map[int]card.Card, GameState) int
-	NotifyCardsDrawn([]card.Card)
-	NotifyNoMatchingCardsInHand(card.Card, []card.Card)
+	PickColor(gameState GameState) color.Color
+	Play(playableCards []card.Card, gameState GameState) card.Card
+	NotifyCardsDrawn(drawnCards []card.Card)
+	NotifyNoMatchingCardsInHand(lastPlayedCard card.Card, hand []card.Card)
 }

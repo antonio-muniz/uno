@@ -1,6 +1,8 @@
 package game
 
 import (
+	"errors"
+
 	"github.com/antonio-muniz/uno/game/card"
 	"github.com/antonio-muniz/uno/game/card/color"
 	"github.com/antonio-muniz/uno/game/ui"
@@ -19,8 +21,7 @@ func newPlayerController(player Player) *playerController {
 }
 
 func (c *playerController) AddCard(kard card.Card) {
-	c.hand = append(c.hand, kard)
-	c.player.NotifyCardsDrawn([]card.Card{kard})
+	c.AddCards([]card.Card{kard})
 }
 
 func (c *playerController) AddCards(cards []card.Card) {
@@ -52,23 +53,47 @@ func (c *playerController) Play(gameState GameState) card.Card {
 		c.player.NotifyNoMatchingCardsInHand(gameState.LastPlayedCard(), gameState.CurrentPlayerHand())
 		return nil
 	}
-	selectedCardIndex := c.player.Play(playableCards, gameState)
-	selectedCard := c.hand[selectedCardIndex]
-	c.hand[selectedCardIndex] = c.hand[len(c.hand)-1]
-	c.hand = c.hand[:len(c.hand)-1]
-	ui.Message.PlayerPlayedCard(c.Name(), selectedCard)
-	return selectedCard
+
+	for {
+		selectedCard := c.player.Play(playableCards, gameState)
+		err := c.removeCardFromHand(selectedCard)
+		if err != nil {
+			ui.Printfln("Cheat detected! Card %s is not in %s's hand!", selectedCard, c.player.Name())
+			continue
+		}
+		ui.Message.PlayerPlayedCard(c.Name(), selectedCard)
+		return selectedCard
+	}
 }
 
-func (c *playerController) selectPlayableCards(gameState GameState) map[int]card.Card {
+func (c *playerController) selectPlayableCards(gameState GameState) []card.Card {
 	currentColor := gameState.CurrentColor()
 	lastPlayedCard := gameState.LastPlayedCard()
 
-	playableCards := make(map[int]card.Card)
-	for index, candidateCard := range c.hand {
+	var playableCards []card.Card
+	for _, candidateCard := range c.hand {
 		if Playable(candidateCard, currentColor, lastPlayedCard) {
-			playableCards[index] = candidateCard
+			playableCards = append(playableCards, candidateCard)
 		}
 	}
 	return playableCards
+}
+
+func (c *playerController) removeCardFromHand(card card.Card) error {
+	cardIndex, err := c.findCardInHand(card)
+	if err != nil {
+		return err
+	}
+	c.hand[cardIndex] = c.hand[len(c.hand)-1]
+	c.hand = c.hand[:len(c.hand)-1]
+	return nil
+}
+
+func (c *playerController) findCardInHand(card card.Card) (int, error) {
+	for index, cardInHand := range c.hand {
+		if cardInHand.Equal(card) {
+			return index, nil
+		}
+	}
+	return -1, errors.New("card not found")
 }

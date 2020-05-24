@@ -23,6 +23,11 @@ func (c WildCard) Color() color.Color {
 	return c.color
 }
 
+func (c WildCard) Equal(other Card) bool {
+	_, typeMatched := other.(WildCard)
+	return typeMatched
+}
+
 func (c WildCard) String() string {
 	return c.color.Paint("[(*)]")
 }
