@@ -50,11 +50,6 @@ var Blue = &colorStruct{
 	colorFunction: color.New(color.FgHiCyan).SprintfFunc(),
 }
 
-var Black = &colorStruct{
-	name:          "black",
-	colorFunction: color.New(color.FgHiWhite).SprintfFunc(),
-}
-
 var Stdout io.Writer = color.Output
 
 var colors = map[string]Color{
@@ -62,7 +57,6 @@ var colors = map[string]Color{
 	Yellow.name: Yellow,
 	Green.name:  Green,
 	Blue.name:   Blue,
-	Black.name:  Black,
 }
 
 func ByName(name string) (Color, error) {

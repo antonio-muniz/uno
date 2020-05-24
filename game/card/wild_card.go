@@ -5,12 +5,10 @@ import (
 	"github.com/antonio-muniz/uno/game/card/color"
 )
 
-type WildCard struct {
-	color color.Color
-}
+type WildCard struct{}
 
 func NewWildCard() WildCard {
-	return WildCard{color: color.Black}
+	return WildCard{}
 }
 
 func (c WildCard) Actions() []action.Action {
@@ -20,7 +18,7 @@ func (c WildCard) Actions() []action.Action {
 }
 
 func (c WildCard) Color() color.Color {
-	return c.color
+	return nil
 }
 
 func (c WildCard) Equal(other Card) bool {
@@ -29,5 +27,5 @@ func (c WildCard) Equal(other Card) bool {
 }
 
 func (c WildCard) String() string {
-	return c.color.Paint("[(*)]")
+	return "[(*)]"
 }

@@ -8,13 +8,26 @@ import (
 	"github.com/antonio-muniz/uno/game/card/color"
 )
 
-func promptString(message string) string {
+func PromptString(message string) string {
 	for {
 		Println(message)
 		var input string
 		_, err := fmt.Scanln(&input)
 		if err != nil {
-			Println("Invalid input")
+			Println("Invalid text input")
+			continue
+		}
+		return input
+	}
+}
+
+func promptInteger(message string) int {
+	for {
+		Println(message)
+		var input int
+		_, err := fmt.Scanln(&input)
+		if err != nil {
+			Println("Invalid number input")
 			continue
 		}
 		return input
@@ -22,12 +35,12 @@ func promptString(message string) string {
 }
 
 func promptLowercaseString(message string) string {
-	input := promptString(message)
+	input := PromptString(message)
 	return strings.ToLower(input)
 }
 
 func promptUppercaseString(message string) string {
-	input := promptString(message)
+	input := PromptString(message)
 	return strings.ToUpper(input)
 }
 
@@ -72,5 +85,16 @@ func PromptColor() color.Color {
 			continue
 		}
 		return chosenColor
+	}
+}
+
+func PromptIntegerInRange(minimum int, maximum int, message string) int {
+	for {
+		input := promptInteger(message)
+		if input < minimum || input > maximum {
+			Printfln("Input out of range (minimum: %d, maximum: %d)", minimum, maximum)
+			continue
+		}
+		return input
 	}
 }

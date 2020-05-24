@@ -5,12 +5,10 @@ import (
 	"github.com/antonio-muniz/uno/game/card/color"
 )
 
-type WildDrawFourCard struct {
-	color color.Color
-}
+type WildDrawFourCard struct{}
 
 func NewWildDrawFourCard() WildDrawFourCard {
-	return WildDrawFourCard{color: color.Black}
+	return WildDrawFourCard{}
 }
 
 func (c WildDrawFourCard) Actions() []action.Action {
@@ -22,7 +20,7 @@ func (c WildDrawFourCard) Actions() []action.Action {
 }
 
 func (c WildDrawFourCard) Color() color.Color {
-	return c.color
+	return nil
 }
 
 func (c WildDrawFourCard) Equal(other Card) bool {
@@ -31,5 +29,5 @@ func (c WildDrawFourCard) Equal(other Card) bool {
 }
 
 func (c WildDrawFourCard) String() string {
-	return c.color.Paint("[+4!]")
+	return "[+4!]"
 }

@@ -21,7 +21,7 @@ func (p goodPlayer) PickColor(gameState game.GameState) color.Color {
 
 	colorCounts := make(map[color.Color]int)
 	for _, card := range gameState.CurrentPlayerHand() {
-		if card.Color() == color.Black {
+		if card.Color() == nil {
 			colorCounts[color.Blue]++
 			colorCounts[color.Green]++
 			colorCounts[color.Red]++
@@ -36,9 +36,6 @@ func (p goodPlayer) PickColor(gameState game.GameState) color.Color {
 		mostFrequentColorAmount int
 	)
 	for availableColor, amount := range colorCounts {
-		if availableColor == color.Black {
-			continue
-		}
 		if amount > mostFrequentColorAmount {
 			mostFrequentColorAmount = amount
 			mostFrequentColor = availableColor
