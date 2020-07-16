@@ -32,23 +32,14 @@ func (g *Game) Play() Player {
 	for {
 		player := g.players.Next()
 		gameState := g.extractGameState(player)
-		card := player.Play(gameState)
-		if card == nil {
-			extraCard := g.deck.DrawOne()
-			if Playable(extraCard, g.pile.CurrentColor(), g.pile.Top()) {
-				ui.Message.PlayerDrewAndPlayedCard(player.Name(), extraCard)
-				card = extraCard
-			} else {
-				player.AddCard(extraCard)
-				ui.Message.PlayerPassed(player.Name())
-				continue
-			}
+		card := player.Play(gameState, g.deck)
+		if card != nil {
+			g.pile.Add(card)
+			g.performCardActions(card)
 		}
-		g.pile.Add(card)
 		if player.NoCards() {
 			return player.player
 		}
-		g.performCardActions(card)
 	}
 }
 

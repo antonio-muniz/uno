@@ -47,11 +47,11 @@ func (c *playerController) PickColor(gameState GameState) color.Color {
 	return c.player.PickColor(gameState)
 }
 
-func (c *playerController) Play(gameState GameState) card.Card {
+func (c *playerController) Play(gameState GameState, deck *deck) card.Card {
 	playableCards := c.selectPlayableCards(gameState)
 	if len(playableCards) == 0 {
 		c.player.NotifyNoMatchingCardsInHand(gameState.LastPlayedCard(), gameState.CurrentPlayerHand())
-		return nil
+		return c.tryTopDecking(gameState, deck)
 	}
 
 	for {
@@ -63,6 +63,18 @@ func (c *playerController) Play(gameState GameState) card.Card {
 		}
 		ui.Message.PlayerPlayedCard(c.Name(), selectedCard)
 		return selectedCard
+	}
+}
+
+func (c *playerController) tryTopDecking(gameState GameState, deck *deck) card.Card {
+	extraCard := deck.DrawOne()
+	if Playable(extraCard, gameState.CurrentColor(), gameState.LastPlayedCard()) {
+		ui.Message.PlayerDrewAndPlayedCard(c.Name(), extraCard)
+		return extraCard
+	} else {
+		c.AddCard(extraCard)
+		ui.Message.PlayerPassed(c.Name())
+		return nil
 	}
 }
 
