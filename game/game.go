@@ -66,10 +66,8 @@ func (g *Game) performCardActions(playedCard card.Card) {
 			g.players.Current().AddCards(cards)
 		case action.ReverseTurnsAction:
 			g.players.Reverse()
-			ui.Message.TurnOrderReversed()
 		case action.SkipTurnAction:
-			skippedPlayer := g.players.Next()
-			ui.Message.PlayerTurnSkipped(skippedPlayer.Name())
+			g.players.Skip()
 		case action.PickColorAction:
 			gameState := g.extractGameState(player)
 			color := player.PickColor(gameState)

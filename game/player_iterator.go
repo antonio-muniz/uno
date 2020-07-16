@@ -1,5 +1,7 @@
 package game
 
+import "github.com/antonio-muniz/uno/game/ui"
+
 const (
 	left  = -1
 	right = 1
@@ -38,4 +40,10 @@ func (i *playerIterator) Next() *playerController {
 
 func (i *playerIterator) Reverse() {
 	i.direction = -i.direction
+	ui.Message.TurnOrderReversed()
+}
+
+func (i *playerIterator) Skip() {
+	skippedPlayer := i.Next()
+	ui.Message.PlayerTurnSkipped(skippedPlayer.Name())
 }
