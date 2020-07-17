@@ -29,10 +29,6 @@ func (c ColoredCard) Equal(other Card) bool {
 	return c.card.Equal(other) && c.color == other.Color()
 }
 
-func (c ColoredCard) SameType(other Card) bool {
-	return c.card.SameType(other)
-}
-
 func (c ColoredCard) String() string {
 	return c.color.Paint(c.card.String())
 }
