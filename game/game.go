@@ -71,7 +71,8 @@ func (g *Game) performCardActions(playedCard card.Card) {
 		case action.PickColorAction:
 			gameState := g.extractGameState(player)
 			color := player.PickColor(gameState)
-			g.pile.SetCurrentColor(color)
+			coloredCard := card.NewColoredCard(playedCard, color)
+			g.pile.ReplaceTop(coloredCard)
 			ui.Message.PlayerPickedColor(player.Name(), color)
 		}
 	}

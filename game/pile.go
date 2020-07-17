@@ -23,6 +23,11 @@ func (p *pile) CurrentColor() color.Color {
 	return p.currentColor
 }
 
+func (p *pile) ReplaceTop(card card.Card) {
+	p.cards[len(p.cards)-1] = card
+	p.currentColor = card.Color()
+}
+
 func (p *pile) SetCurrentColor(color color.Color) {
 	p.currentColor = color
 }
