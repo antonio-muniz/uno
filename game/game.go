@@ -88,7 +88,6 @@ func (g Game) extractGameState(player *playerController) GameState {
 	})
 
 	return GameState{
-		currentColor:      g.pile.CurrentColor(),
 		lastPlayedCard:    g.pile.Top(),
 		currentPlayerHand: player.Hand(),
 		playerSequence:    playerSequence,

@@ -68,7 +68,7 @@ func (c *playerController) Play(gameState GameState, deck *deck) card.Card {
 
 func (c *playerController) tryTopDecking(gameState GameState, deck *deck) card.Card {
 	extraCard := deck.DrawOne()
-	if Playable(extraCard, gameState.CurrentColor(), gameState.LastPlayedCard()) {
+	if Playable(extraCard, gameState.LastPlayedCard()) {
 		ui.Message.PlayerDrewAndPlayedCard(c.Name(), extraCard)
 		return extraCard
 	}
@@ -78,12 +78,9 @@ func (c *playerController) tryTopDecking(gameState GameState, deck *deck) card.C
 }
 
 func (c *playerController) selectPlayableCards(gameState GameState) []card.Card {
-	currentColor := gameState.CurrentColor()
-	lastPlayedCard := gameState.LastPlayedCard()
-
 	var playableCards []card.Card
 	for _, candidateCard := range c.hand {
-		if Playable(candidateCard, currentColor, lastPlayedCard) {
+		if Playable(candidateCard, gameState.LastPlayedCard()) {
 			playableCards = append(playableCards, candidateCard)
 		}
 	}

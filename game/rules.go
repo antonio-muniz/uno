@@ -2,11 +2,10 @@ package game
 
 import (
 	"github.com/antonio-muniz/uno/game/card"
-	"github.com/antonio-muniz/uno/game/card/color"
 )
 
-func Playable(candidateCard card.Card, currentColor color.Color, lastPlayedCard card.Card) bool {
-	if candidateCard.Color() == currentColor {
+func Playable(candidateCard card.Card, lastPlayedCard card.Card) bool {
+	if candidateCard.Color() == lastPlayedCard.Color() {
 		return true
 	}
 

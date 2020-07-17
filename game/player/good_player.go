@@ -52,7 +52,7 @@ func (p goodPlayer) Play(playableCards []card.Card, gameState game.GameState) ca
 	for cardIndex, playableCard := range playableCards {
 		spareCards := 0
 		for _, handCard := range gameState.CurrentPlayerHand() {
-			if game.Playable(handCard, playableCard.Color(), playableCard) {
+			if game.Playable(handCard, playableCard) {
 				spareCards++
 			}
 		}

@@ -18,7 +18,7 @@ func NewColoredCard(card Card, color color.Color) ColoredCard {
 }
 
 func (c ColoredCard) Actions() []action.Action {
-	return c.Actions()
+	return c.card.Actions()
 }
 
 func (c ColoredCard) Color() color.Color {
@@ -26,7 +26,7 @@ func (c ColoredCard) Color() color.Color {
 }
 
 func (c ColoredCard) Equal(other Card) bool {
-	return c.card.Equal(other) && c.color == other.Color()
+	return c.card.Equal(other)
 }
 
 func (c ColoredCard) String() string {

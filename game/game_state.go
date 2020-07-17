@@ -5,19 +5,13 @@ import (
 	"strings"
 
 	"github.com/antonio-muniz/uno/game/card"
-	"github.com/antonio-muniz/uno/game/card/color"
 )
 
 type GameState struct {
-	currentColor      color.Color
 	lastPlayedCard    card.Card
 	currentPlayerHand []card.Card
 	playerSequence    []string
 	playerHandCounts  map[string]int
-}
-
-func (s GameState) CurrentColor() color.Color {
-	return s.currentColor
 }
 
 func (s GameState) LastPlayedCard() card.Card {
@@ -38,7 +32,6 @@ func (s GameState) PlayerHandCounts() map[string]int {
 
 func (s GameState) String() string {
 	var lines []string
-	lines = append(lines, fmt.Sprintf("Current color: %s", s.currentColor))
 	lines = append(lines, fmt.Sprintf("Last played card: %s", s.lastPlayedCard))
 
 	var playerStatuses []string
