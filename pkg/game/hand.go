@@ -44,3 +44,7 @@ func (h *Hand) RemoveCard(card card.Card) bool {
 	}
 	return false
 }
+
+func (h *Hand) Size() int {
+	return len(h.cards)
+}

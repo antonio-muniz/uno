@@ -54,9 +54,6 @@ func TestPlayableCards(t *testing.T) {
 func TestRemoveCard(t *testing.T) {
 	hand := game.NewHand()
 	hand.AddCards([]card.Card{
-		card.NewNumberCard(color.Blue, 5),
-		card.NewNumberCard(color.Green, 8),
-		card.NewNumberCard(color.Green, 7),
 		card.NewWildCard(),
 		card.NewReverseCard(color.Yellow),
 		card.NewDrawTwoCard(color.Blue),
@@ -64,7 +61,26 @@ func TestRemoveCard(t *testing.T) {
 
 	result := hand.RemoveCard(card.NewReverseCard(color.Yellow))
 	require.True(t, result)
+	require.Equal(t, []card.Card{
+		card.NewWildCard(),
+		card.NewDrawTwoCard(color.Blue),
+	}, hand.Cards())
 
 	result = hand.RemoveCard(card.NewDrawTwoCard(color.Red))
 	require.False(t, result)
+	require.Equal(t, []card.Card{
+		card.NewWildCard(),
+		card.NewDrawTwoCard(color.Blue),
+	}, hand.Cards())
+}
+
+func TestSize(t *testing.T) {
+	hand := game.NewHand()
+	require.Equal(t, 0, hand.Size())
+	hand.AddCards([]card.Card{
+		card.NewNumberCard(color.Green, 7),
+		card.NewWildCard(),
+		card.NewReverseCard(color.Yellow),
+	})
+	require.Equal(t, 3, hand.Size())
 }

@@ -1,8 +1,6 @@
 package game
 
 import (
-	"errors"
-
 	"github.com/antonio-muniz/uno/pkg/card"
 	"github.com/antonio-muniz/uno/pkg/card/color"
 	"github.com/antonio-muniz/uno/pkg/ui"
@@ -10,29 +8,23 @@ import (
 
 type playerController struct {
 	player Player
-	hand   []card.Card
+	hand   *Hand
 }
 
 func newPlayerController(player Player) *playerController {
 	return &playerController{
 		player: player,
-		hand:   make([]card.Card, 0, 7),
+		hand:   NewHand(),
 	}
 }
 
-func (c *playerController) AddCard(kard card.Card) {
-	c.AddCards([]card.Card{kard})
-}
-
 func (c *playerController) AddCards(cards []card.Card) {
-	c.hand = append(c.hand, cards...)
+	c.hand.AddCards(cards)
 	c.player.NotifyCardsDrawn(cards)
 }
 
 func (c *playerController) Hand() []card.Card {
-	hand := make([]card.Card, len(c.hand))
-	copy(hand, c.hand)
-	return hand
+	return c.hand.Cards()
 }
 
 func (c *playerController) Name() string {
@@ -40,7 +32,7 @@ func (c *playerController) Name() string {
 }
 
 func (c *playerController) NoCards() bool {
-	return len(c.hand) == 0
+	return c.hand.Empty()
 }
 
 func (c *playerController) PickColor(gameState GameState) color.Color {
@@ -48,7 +40,7 @@ func (c *playerController) PickColor(gameState GameState) color.Color {
 }
 
 func (c *playerController) Play(gameState GameState, deck *deck) card.Card {
-	playableCards := c.selectPlayableCards(gameState)
+	playableCards := c.hand.PlayableCards(gameState.LastPlayedCard())
 	if len(playableCards) == 0 {
 		c.player.NotifyNoMatchingCardsInHand(gameState.LastPlayedCard(), gameState.CurrentPlayerHand())
 		return c.tryTopDecking(gameState, deck)
@@ -56,8 +48,8 @@ func (c *playerController) Play(gameState GameState, deck *deck) card.Card {
 
 	for {
 		selectedCard := c.player.Play(playableCards, gameState)
-		err := c.removeCardFromHand(selectedCard)
-		if err != nil {
+		removed := c.hand.RemoveCard(selectedCard)
+		if !removed {
 			ui.Printfln("Cheat detected! Card %s is not in %s's hand!", selectedCard, c.player.Name())
 			continue
 		}
@@ -72,36 +64,7 @@ func (c *playerController) tryTopDecking(gameState GameState, deck *deck) card.C
 		ui.Message.PlayerDrewAndPlayedCard(c.Name(), extraCard)
 		return extraCard
 	}
-	c.AddCard(extraCard)
+	c.AddCards([]card.Card{extraCard})
 	ui.Message.PlayerPassed(c.Name())
 	return nil
-}
-
-func (c *playerController) selectPlayableCards(gameState GameState) []card.Card {
-	var playableCards []card.Card
-	for _, candidateCard := range c.hand {
-		if Playable(candidateCard, gameState.LastPlayedCard()) {
-			playableCards = append(playableCards, candidateCard)
-		}
-	}
-	return playableCards
-}
-
-func (c *playerController) removeCardFromHand(card card.Card) error {
-	cardIndex, err := c.findCardInHand(card)
-	if err != nil {
-		return err
-	}
-	c.hand[cardIndex] = c.hand[len(c.hand)-1]
-	c.hand = c.hand[:len(c.hand)-1]
-	return nil
-}
-
-func (c *playerController) findCardInHand(card card.Card) (int, error) {
-	for index, cardInHand := range c.hand {
-		if cardInHand.Equal(card) {
-			return index, nil
-		}
-	}
-	return -1, errors.New("card not found")
 }
