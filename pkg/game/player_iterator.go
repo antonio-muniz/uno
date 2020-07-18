@@ -2,11 +2,6 @@ package game
 
 import "github.com/antonio-muniz/uno/pkg/ui"
 
-const (
-	left  = -1
-	right = 1
-)
-
 type playerIterator struct {
 	players   []*playerController
 	direction int
