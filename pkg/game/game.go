@@ -13,13 +13,8 @@ type Game struct {
 }
 
 func New(players []Player) *Game {
-	playerControllers := make([]*playerController, len(players))
-	for index, player := range players {
-		playerControllers[index] = newPlayerController(player)
-	}
-
 	return &Game{
-		players: newPlayerIterator(playerControllers),
+		players: newPlayerIterator(players),
 		deck:    createUnoDeck(),
 		pile:    createEmptyPile(),
 	}

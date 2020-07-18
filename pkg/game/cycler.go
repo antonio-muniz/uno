@@ -19,6 +19,10 @@ func NewCycler(elements []string) *Cycler {
 	}
 }
 
+func (c *Cycler) Current() string {
+	return c.elements[c.current]
+}
+
 func (c *Cycler) ForEach(function func(string)) {
 	for _, element := range c.elements {
 		function(element)

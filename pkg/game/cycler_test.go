@@ -9,6 +9,27 @@ import (
 	"github.com/stretchr/testify/require"
 )
 
+func TestCurrent(t *testing.T) {
+	cycler := game.NewCycler([]string{"A", "B", "C", "D"})
+	assert.Equal(t, "D", cycler.Current())
+	cycler.Next()
+	assert.Equal(t, "A", cycler.Current())
+	cycler.Next()
+	assert.Equal(t, "B", cycler.Current())
+	cycler.Reverse()
+	cycler.Next()
+	assert.Equal(t, "A", cycler.Current())
+	cycler.Next()
+	assert.Equal(t, "D", cycler.Current())
+	cycler.Next()
+	assert.Equal(t, "C", cycler.Current())
+	cycler.Reverse()
+	cycler.Next()
+	assert.Equal(t, "D", cycler.Current())
+	cycler.Next()
+	assert.Equal(t, "A", cycler.Current())
+}
+
 func TestForEach(t *testing.T) {
 	cycler := game.NewCycler([]string{"A", "B", "C", "D"})
 

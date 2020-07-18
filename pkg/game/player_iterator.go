@@ -3,21 +3,26 @@ package game
 import "github.com/antonio-muniz/uno/pkg/ui"
 
 type playerIterator struct {
-	players   []*playerController
-	direction int
-	current   int
+	players map[string]*playerController
+	cycler  *Cycler
 }
 
-func newPlayerIterator(players []*playerController) *playerIterator {
+func newPlayerIterator(players []Player) *playerIterator {
+	var playerNames []string
+	playerMap := make(map[string]*playerController, len(players))
+	for _, player := range players {
+		playerName := player.Name()
+		playerNames = append(playerNames, playerName)
+		playerMap[playerName] = newPlayerController(player)
+	}
 	return &playerIterator{
-		players:   players,
-		direction: right,
-		current:   len(players) - 1,
+		players: playerMap,
+		cycler:  NewCycler(playerNames),
 	}
 }
 
 func (i *playerIterator) Current() *playerController {
-	return i.players[i.current]
+	return i.players[i.cycler.Current()]
 }
 
 func (i *playerIterator) ForEach(function func(player *playerController)) {
@@ -28,13 +33,11 @@ func (i *playerIterator) ForEach(function func(player *playerController)) {
 }
 
 func (i *playerIterator) Next() *playerController {
-	playerCount := len(i.players)
-	i.current = (i.current + i.direction + playerCount) % playerCount
-	return i.players[i.current]
+	return i.players[i.cycler.Next()]
 }
 
 func (i *playerIterator) Reverse() {
-	i.direction = -i.direction
+	i.cycler.Reverse()
 	ui.Message.TurnOrderReversed()
 }
 
