@@ -16,7 +16,7 @@ func NewNaivePlayer(name string) game.Player {
 	return naivePlayer{basicPlayer: basicPlayer{name: name}}
 }
 
-func (p naivePlayer) PickColor(gameState game.GameState) color.Color {
+func (p naivePlayer) PickColor(gameState game.State) color.Color {
 	return []color.Color{
 		color.Red,
 		color.Yellow,
@@ -25,7 +25,7 @@ func (p naivePlayer) PickColor(gameState game.GameState) color.Color {
 	}[rand.Intn(4)]
 }
 
-func (p naivePlayer) Play(playableCards []card.Card, gameState game.GameState) card.Card {
+func (p naivePlayer) Play(playableCards []card.Card, gameState game.State) card.Card {
 	for _, card := range playableCards {
 		return card
 	}

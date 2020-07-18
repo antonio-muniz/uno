@@ -17,7 +17,9 @@ func (h *Hand) AddCards(cards []card.Card) {
 }
 
 func (h *Hand) Cards() []card.Card {
-	return h.cards
+	cards := make([]card.Card, len(h.cards))
+	copy(cards, h.cards)
+	return cards
 }
 
 func (h *Hand) Empty() bool {

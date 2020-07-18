@@ -15,11 +15,11 @@ func NewHumanPlayer(name string) game.Player {
 	return humanPlayer{basicPlayer: basicPlayer{name: name}}
 }
 
-func (p humanPlayer) PickColor(gameState game.GameState) color.Color {
+func (p humanPlayer) PickColor(gameState game.State) color.Color {
 	return ui.PromptColor()
 }
 
-func (p humanPlayer) Play(playableCards []card.Card, gameState game.GameState) card.Card {
+func (p humanPlayer) Play(playableCards []card.Card, gameState game.State) card.Card {
 	ui.Message.HumanPlayerTurnStarted(p.name)
 	ui.Println(gameState)
 

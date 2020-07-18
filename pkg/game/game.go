@@ -26,7 +26,7 @@ func (g *Game) Play() Player {
 
 	for {
 		player := g.players.Next()
-		gameState := g.extractGameState(player)
+		gameState := g.extractState(player)
 		card := player.Play(gameState, g.deck)
 		if card != nil {
 			g.pile.Add(card)
@@ -64,7 +64,7 @@ func (g *Game) performCardActions(playedCard card.Card) {
 		case action.SkipTurnAction:
 			g.players.Skip()
 		case action.PickColorAction:
-			gameState := g.extractGameState(player)
+			gameState := g.extractState(player)
 			color := player.PickColor(gameState)
 			coloredCard := card.NewColoredCard(playedCard, color)
 			g.pile.ReplaceTop(coloredCard)
@@ -73,7 +73,7 @@ func (g *Game) performCardActions(playedCard card.Card) {
 	}
 }
 
-func (g Game) extractGameState(player *playerController) GameState {
+func (g Game) extractState(player *playerController) State {
 	playerSequence := make([]string, 0)
 	playerHandCounts := make(map[string]int)
 
@@ -82,10 +82,10 @@ func (g Game) extractGameState(player *playerController) GameState {
 		playerHandCounts[player.Name()] = len(player.Hand())
 	})
 
-	return GameState{
-		lastPlayedCard:    g.pile.Top(),
-		currentPlayerHand: player.Hand(),
-		playerSequence:    playerSequence,
-		playerHandCounts:  playerHandCounts,
+	return State{
+		LastPlayedCard:    g.pile.Top(),
+		CurrentPlayerHand: player.Hand(),
+		PlayerSequence:    playerSequence,
+		PlayerHandCounts:  playerHandCounts,
 	}
 }

@@ -14,13 +14,13 @@ func NewGoodPlayer(name string) game.Player {
 	return goodPlayer{basicPlayer: basicPlayer{name: name}}
 }
 
-func (p goodPlayer) PickColor(gameState game.GameState) color.Color {
-	if len(gameState.CurrentPlayerHand()) == 0 {
+func (p goodPlayer) PickColor(gameState game.State) color.Color {
+	if len(gameState.CurrentPlayerHand) == 0 {
 		return color.Blue
 	}
 
 	colorCounts := make(map[color.Color]int)
-	for _, card := range gameState.CurrentPlayerHand() {
+	for _, card := range gameState.CurrentPlayerHand {
 		if card.Color() == nil {
 			colorCounts[color.Blue]++
 			colorCounts[color.Green]++
@@ -45,13 +45,13 @@ func (p goodPlayer) PickColor(gameState game.GameState) color.Color {
 	return mostFrequentColor
 }
 
-func (p goodPlayer) Play(playableCards []card.Card, gameState game.GameState) card.Card {
+func (p goodPlayer) Play(playableCards []card.Card, gameState game.State) card.Card {
 	mostDiscardableCardIndex := 0
 	maxSpareCards := 0
 
 	for cardIndex, playableCard := range playableCards {
 		spareCards := 0
-		for _, handCard := range gameState.CurrentPlayerHand() {
+		for _, handCard := range gameState.CurrentPlayerHand {
 			if game.Playable(handCard, playableCard) {
 				spareCards++
 			}
