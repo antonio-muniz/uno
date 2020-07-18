@@ -1,9 +1,9 @@
 package player
 
 import (
-	"github.com/antonio-muniz/uno/pkg"
 	"github.com/antonio-muniz/uno/pkg/card"
 	"github.com/antonio-muniz/uno/pkg/card/color"
+	"github.com/antonio-muniz/uno/pkg/game"
 	"github.com/antonio-muniz/uno/pkg/ui"
 )
 
