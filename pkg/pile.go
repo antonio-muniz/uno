@@ -1,7 +1,7 @@
 package game
 
 import (
-	"github.com/antonio-muniz/uno/game/card"
+	"github.com/antonio-muniz/uno/pkg/card"
 )
 
 type pile struct {

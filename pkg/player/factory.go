@@ -3,7 +3,7 @@ package player
 import (
 	"math/rand"
 
-	"github.com/antonio-muniz/uno/game"
+	"github.com/antonio-muniz/uno/pkg"
 )
 
 var botNames = []string{

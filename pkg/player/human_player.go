@@ -1,10 +1,10 @@
 package player
 
 import (
-	"github.com/antonio-muniz/uno/game"
-	"github.com/antonio-muniz/uno/game/card"
-	"github.com/antonio-muniz/uno/game/card/color"
-	"github.com/antonio-muniz/uno/game/ui"
+	"github.com/antonio-muniz/uno/pkg"
+	"github.com/antonio-muniz/uno/pkg/card"
+	"github.com/antonio-muniz/uno/pkg/card/color"
+	"github.com/antonio-muniz/uno/pkg/ui"
 )
 
 type humanPlayer struct {

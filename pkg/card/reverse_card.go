@@ -1,8 +1,8 @@
 package card
 
 import (
-	"github.com/antonio-muniz/uno/game/card/action"
-	"github.com/antonio-muniz/uno/game/card/color"
+	"github.com/antonio-muniz/uno/pkg/card/action"
+	"github.com/antonio-muniz/uno/pkg/card/color"
 )
 
 type ReverseCard struct {

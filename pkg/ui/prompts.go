@@ -4,8 +4,8 @@ import (
 	"fmt"
 	"strings"
 
-	"github.com/antonio-muniz/uno/game/card"
-	"github.com/antonio-muniz/uno/game/card/color"
+	"github.com/antonio-muniz/uno/pkg/card"
+	"github.com/antonio-muniz/uno/pkg/card/color"
 )
 
 func PromptString(message string) string {

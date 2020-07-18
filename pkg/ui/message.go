@@ -1,8 +1,8 @@
 package ui
 
 import (
-	"github.com/antonio-muniz/uno/game/card"
-	"github.com/antonio-muniz/uno/game/card/color"
+	"github.com/antonio-muniz/uno/pkg/card"
+	"github.com/antonio-muniz/uno/pkg/card/color"
 )
 
 var Message = MessageWriter{}

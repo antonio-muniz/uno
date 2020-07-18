@@ -1,6 +1,6 @@
 package game
 
-import "github.com/antonio-muniz/uno/game/ui"
+import "github.com/antonio-muniz/uno/pkg/ui"
 
 const (
 	left  = -1
