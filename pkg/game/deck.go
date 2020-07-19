@@ -7,21 +7,21 @@ import (
 	"github.com/antonio-muniz/uno/pkg/card/color"
 )
 
-func createUnoDeck() *deck {
-	deck := &deck{}
+type Deck struct {
+	cards []card.Card
+}
+
+func NewDeck() *Deck {
+	deck := &Deck{}
 	fillDeck(deck)
 	return deck
 }
 
-type deck struct {
-	cards []card.Card
-}
-
-func (d *deck) DrawOne() card.Card {
+func (d *Deck) DrawOne() card.Card {
 	return d.Draw(1)[0]
 }
 
-func (d *deck) Draw(amount int) []card.Card {
+func (d *Deck) Draw(amount int) []card.Card {
 	if len(d.cards) < amount {
 		fillDeck(d)
 	}
@@ -30,7 +30,7 @@ func (d *deck) Draw(amount int) []card.Card {
 	return cards
 }
 
-func fillDeck(deck *deck) {
+func fillDeck(deck *Deck) {
 	cards := make([]card.Card, 0, 108)
 
 	cards = append(cards, createBlackCards()...)
@@ -41,7 +41,7 @@ func fillDeck(deck *deck) {
 
 	shuffleCards(cards)
 
-	deck.cards = cards
+	deck.cards = append(deck.cards, cards...)
 }
 
 func createColorCards(cardColor color.Color) []card.Card {
@@ -57,8 +57,8 @@ func createColorCards(cardColor color.Color) []card.Card {
 		drawTwoCard, drawTwoCard,
 	}
 
-	for n := 1; n <= 9; n++ {
-		numberCard := card.NewNumberCard(cardColor, n)
+	for number := 1; number <= 9; number++ {
+		numberCard := card.NewNumberCard(cardColor, number)
 		cards = append(cards, numberCard, numberCard)
 	}
 

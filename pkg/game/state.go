@@ -9,6 +9,7 @@ import (
 
 type State struct {
 	LastPlayedCard    card.Card
+	PlayedCards       []card.Card
 	CurrentPlayerHand []card.Card
 	PlayerSequence    []string
 	PlayerHandCounts  map[string]int

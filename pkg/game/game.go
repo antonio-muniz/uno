@@ -8,14 +8,14 @@ import (
 
 type Game struct {
 	players *playerIterator
-	deck    *deck
+	deck    *Deck
 	pile    *Pile
 }
 
 func New(players []Player) *Game {
 	return &Game{
 		players: newPlayerIterator(players),
-		deck:    createUnoDeck(),
+		deck:    NewDeck(),
 		pile:    NewPile(),
 	}
 }
@@ -84,6 +84,7 @@ func (g Game) extractState(player *playerController) State {
 
 	return State{
 		LastPlayedCard:    g.pile.Top(),
+		PlayedCards:       g.pile.Cards(),
 		CurrentPlayerHand: player.Hand(),
 		PlayerSequence:    playerSequence,
 		PlayerHandCounts:  playerHandCounts,
