@@ -4,23 +4,29 @@ import (
 	"github.com/antonio-muniz/uno/pkg/card"
 )
 
-type pile struct {
+type Pile struct {
 	cards []card.Card
 }
 
-func createEmptyPile() *pile {
-	return &pile{cards: make([]card.Card, 0, 54)}
+func NewPile() *Pile {
+	return &Pile{cards: make([]card.Card, 0, 54)}
 }
 
-func (p *pile) Add(card card.Card) {
+func (p *Pile) Add(card card.Card) {
 	p.cards = append(p.cards, card)
 }
 
-func (p *pile) ReplaceTop(card card.Card) {
+func (p *Pile) Cards() []card.Card {
+	cards := make([]card.Card, len(p.cards))
+	copy(cards, p.cards)
+	return cards
+}
+
+func (p *Pile) ReplaceTop(card card.Card) {
 	p.cards[len(p.cards)-1] = card
 }
 
-func (p *pile) Top() card.Card {
+func (p *Pile) Top() card.Card {
 	pileSize := len(p.cards)
 	if pileSize == 0 {
 		return nil

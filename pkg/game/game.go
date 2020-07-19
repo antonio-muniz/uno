@@ -9,14 +9,14 @@ import (
 type Game struct {
 	players *playerIterator
 	deck    *deck
-	pile    *pile
+	pile    *Pile
 }
 
 func New(players []Player) *Game {
 	return &Game{
 		players: newPlayerIterator(players),
 		deck:    createUnoDeck(),
-		pile:    createEmptyPile(),
+		pile:    NewPile(),
 	}
 }
 
