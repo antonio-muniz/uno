@@ -36,15 +36,13 @@ func (h *Hand) PlayableCards(lastPlayedCard card.Card) []card.Card {
 	return playableCards
 }
 
-func (h *Hand) RemoveCard(card card.Card) bool {
+func (h *Hand) RemoveCard(card card.Card) {
 	for index, cardInHand := range h.cards {
 		if cardInHand.Equal(card) {
 			h.cards[index] = h.cards[len(h.cards)-1]
 			h.cards = h.cards[:len(h.cards)-1]
-			return true
 		}
 	}
-	return false
 }
 
 func (h *Hand) Size() int {

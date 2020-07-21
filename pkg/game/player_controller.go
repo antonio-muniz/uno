@@ -3,7 +3,6 @@ package game
 import (
 	"github.com/antonio-muniz/uno/pkg/card"
 	"github.com/antonio-muniz/uno/pkg/card/color"
-	"github.com/antonio-muniz/uno/pkg/event"
 	"github.com/antonio-muniz/uno/pkg/ui"
 )
 
@@ -49,15 +48,11 @@ func (c *playerController) Play(gameState State, deck *Deck) card.Card {
 
 	for {
 		selectedCard := c.player.Play(playableCards, gameState)
-		removed := c.hand.RemoveCard(selectedCard)
-		if !removed {
+		if !contains(playableCards, selectedCard) {
 			ui.Printfln("Cheat detected! Card %s is not in %s's hand!", selectedCard, c.player.Name())
 			continue
 		}
-		event.CardPlayed.Emit(event.CardPlayedPayload{
-			PlayerName: c.player.Name(),
-			Card:       selectedCard,
-		})
+		c.hand.RemoveCard(selectedCard)
 		return selectedCard
 	}
 }
@@ -71,4 +66,13 @@ func (c *playerController) tryTopDecking(gameState State, deck *Deck) card.Card 
 	c.AddCards([]card.Card{extraCard})
 	ui.Message.PlayerPassed(c.Name())
 	return nil
+}
+
+func contains(cards []card.Card, searchedCard card.Card) bool {
+	for _, card := range cards {
+		if card.Equal(searchedCard) {
+			return true
+		}
+	}
+	return false
 }

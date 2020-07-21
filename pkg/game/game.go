@@ -3,6 +3,7 @@ package game
 import (
 	"github.com/antonio-muniz/uno/pkg/card"
 	"github.com/antonio-muniz/uno/pkg/card/action"
+	"github.com/antonio-muniz/uno/pkg/event"
 	"github.com/antonio-muniz/uno/pkg/ui"
 )
 
@@ -30,6 +31,10 @@ func (g *Game) Play() Player {
 		card := player.Play(gameState, g.deck)
 		if card != nil {
 			g.pile.Add(card)
+			event.CardPlayed.Emit(event.CardPlayedPayload{
+				PlayerName: player.Name(),
+				Card:       card,
+			})
 			g.performCardActions(card)
 		}
 		if player.NoCards() {

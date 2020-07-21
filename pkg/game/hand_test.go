@@ -59,15 +59,13 @@ func TestRemoveCard(t *testing.T) {
 		card.NewDrawTwoCard(color.Blue),
 	})
 
-	result := hand.RemoveCard(card.NewReverseCard(color.Yellow))
-	require.True(t, result)
+	hand.RemoveCard(card.NewReverseCard(color.Yellow))
 	require.Equal(t, []card.Card{
 		card.NewWildCard(),
 		card.NewDrawTwoCard(color.Blue),
 	}, hand.Cards())
 
-	result = hand.RemoveCard(card.NewDrawTwoCard(color.Red))
-	require.False(t, result)
+	hand.RemoveCard(card.NewDrawTwoCard(color.Red))
 	require.Equal(t, []card.Card{
 		card.NewWildCard(),
 		card.NewDrawTwoCard(color.Blue),
