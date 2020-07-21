@@ -3,6 +3,7 @@ package game
 import (
 	"github.com/antonio-muniz/uno/pkg/card"
 	"github.com/antonio-muniz/uno/pkg/card/color"
+	"github.com/antonio-muniz/uno/pkg/event"
 	"github.com/antonio-muniz/uno/pkg/ui"
 )
 
@@ -53,7 +54,10 @@ func (c *playerController) Play(gameState State, deck *Deck) card.Card {
 			ui.Printfln("Cheat detected! Card %s is not in %s's hand!", selectedCard, c.player.Name())
 			continue
 		}
-		ui.Message.PlayerPlayedCard(c.Name(), selectedCard)
+		event.CardPlayed.Emit(event.CardPlayedPayload{
+			PlayerName: c.player.Name(),
+			Card:       selectedCard,
+		})
 		return selectedCard
 	}
 }
