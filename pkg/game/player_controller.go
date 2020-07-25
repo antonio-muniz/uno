@@ -43,7 +43,8 @@ func (c *playerController) Play(gameState State, deck *Deck) card.Card {
 	playableCards := c.hand.PlayableCards(gameState.LastPlayedCard)
 	if len(playableCards) == 0 {
 		c.player.NotifyNoMatchingCardsInHand(gameState.LastPlayedCard, gameState.CurrentPlayerHand)
-		return c.tryTopDecking(gameState, deck)
+		playableDrawnCard := c.tryTopDecking(gameState, deck)
+		return playableDrawnCard
 	}
 
 	for {
@@ -64,7 +65,7 @@ func (c *playerController) tryTopDecking(gameState State, deck *Deck) card.Card 
 		c.hand.RemoveCard(extraCard)
 		return extraCard
 	}
-	ui.Message.PlayerPassed(c.Name())
+	ui.Message.PlayerPassed(c.player.Name())
 	return nil
 }
 

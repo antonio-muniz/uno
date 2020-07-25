@@ -28,14 +28,18 @@ func (g *Game) Play() Player {
 		player := g.players.Next()
 		gameState := g.extractState(player)
 		card := player.Play(gameState, g.deck)
-		if card != nil {
-			g.pile.Add(card)
-			event.CardPlayed.Emit(event.CardPlayedPayload{
+		if card == nil {
+			event.PlayerPassed.Emit(event.PlayerPassedPayload{
 				PlayerName: player.Name(),
-				Card:       card,
 			})
-			g.performCardActions(card)
+			continue
 		}
+		g.pile.Add(card)
+		event.CardPlayed.Emit(event.CardPlayedPayload{
+			PlayerName: player.Name(),
+			Card:       card,
+		})
+		g.performCardActions(card)
 		if player.NoCards() {
 			return player.player
 		}
