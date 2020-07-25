@@ -52,24 +52,49 @@ func TestPlayableCards(t *testing.T) {
 }
 
 func TestRemoveCard(t *testing.T) {
-	hand := game.NewHand()
-	hand.AddCards([]card.Card{
-		card.NewWildCard(),
-		card.NewReverseCard(color.Yellow),
-		card.NewDrawTwoCard(color.Blue),
+	t.Run("Removes an existing card", func(t *testing.T) {
+		hand := game.NewHand()
+		hand.AddCards([]card.Card{
+			card.NewWildCard(),
+			card.NewReverseCard(color.Yellow),
+			card.NewDrawTwoCard(color.Blue),
+		})
+
+		hand.RemoveCard(card.NewReverseCard(color.Yellow))
+		require.Equal(t, []card.Card{
+			card.NewWildCard(),
+			card.NewDrawTwoCard(color.Blue),
+		}, hand.Cards())
 	})
 
-	hand.RemoveCard(card.NewReverseCard(color.Yellow))
-	require.Equal(t, []card.Card{
-		card.NewWildCard(),
-		card.NewDrawTwoCard(color.Blue),
-	}, hand.Cards())
+	t.Run("Does nothing if specific card is not in hand", func(t *testing.T) {
+		hand := game.NewHand()
+		hand.AddCards([]card.Card{
+			card.NewWildCard(),
+			card.NewReverseCard(color.Yellow),
+			card.NewDrawTwoCard(color.Blue),
+		})
+		hand.RemoveCard(card.NewDrawTwoCard(color.Red))
+		require.Equal(t, []card.Card{
+			card.NewWildCard(),
+			card.NewReverseCard(color.Yellow),
+			card.NewDrawTwoCard(color.Blue),
+		}, hand.Cards())
+	})
 
-	hand.RemoveCard(card.NewDrawTwoCard(color.Red))
-	require.Equal(t, []card.Card{
-		card.NewWildCard(),
-		card.NewDrawTwoCard(color.Blue),
-	}, hand.Cards())
+	t.Run("Removes a single copy of the specified card", func(t *testing.T) {
+		hand := game.NewHand()
+		hand.AddCards([]card.Card{
+			card.NewWildCard(),
+			card.NewNumberCard(color.Red, 6),
+			card.NewNumberCard(color.Red, 6),
+		})
+		hand.RemoveCard(card.NewNumberCard(color.Red, 6))
+		require.Equal(t, []card.Card{
+			card.NewWildCard(),
+			card.NewNumberCard(color.Red, 6),
+		}, hand.Cards())
+	})
 }
 
 func TestSize(t *testing.T) {

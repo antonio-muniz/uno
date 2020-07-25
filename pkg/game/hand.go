@@ -41,6 +41,7 @@ func (h *Hand) RemoveCard(card card.Card) {
 		if cardInHand.Equal(card) {
 			h.cards[index] = h.cards[len(h.cards)-1]
 			h.cards = h.cards[:len(h.cards)-1]
+			return
 		}
 	}
 }
