@@ -59,11 +59,11 @@ func (c *playerController) Play(gameState State, deck *Deck) card.Card {
 
 func (c *playerController) tryTopDecking(gameState State, deck *Deck) card.Card {
 	extraCard := deck.DrawOne()
+	c.AddCards([]card.Card{extraCard})
 	if Playable(extraCard, gameState.LastPlayedCard) {
-		ui.Message.PlayerDrewAndPlayedCard(c.Name(), extraCard)
+		c.hand.RemoveCard(extraCard)
 		return extraCard
 	}
-	c.AddCards([]card.Card{extraCard})
 	ui.Message.PlayerPassed(c.Name())
 	return nil
 }
