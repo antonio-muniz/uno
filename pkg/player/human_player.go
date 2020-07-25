@@ -19,14 +19,15 @@ func NewHumanPlayer(name string) game.Player {
 }
 
 func (p humanPlayer) PickColor(gameState game.State) color.Color {
-	return ui.PromptColor()
+	color := ui.PromptColor()
+	return color
 }
 
 func (p humanPlayer) Play(playableCards []card.Card, gameState game.State) card.Card {
 	ui.Message.HumanPlayerTurnStarted(p.name)
 	ui.Println(gameState)
-
-	return ui.PromptCardSelection(playableCards)
+	card := ui.PromptCardSelection(playableCards)
+	return card
 }
 
 func (p humanPlayer) OnCardPlayed(payload event.CardPlayedPayload) {

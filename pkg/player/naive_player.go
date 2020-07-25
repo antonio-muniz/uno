@@ -17,17 +17,19 @@ func NewNaivePlayer(name string) game.Player {
 }
 
 func (p naivePlayer) PickColor(gameState game.State) color.Color {
-	return []color.Color{
-		color.Red,
-		color.Yellow,
-		color.Blue,
-		color.Green,
-	}[rand.Intn(4)]
+	randomIndex := rand.Intn(4)
+	randomColor := allColors[randomIndex]
+	return randomColor
 }
 
 func (p naivePlayer) Play(playableCards []card.Card, gameState game.State) card.Card {
-	for _, card := range playableCards {
-		return card
-	}
-	return nil
+	firstCard := playableCards[0]
+	return firstCard
+}
+
+var allColors = []color.Color{
+	color.Red,
+	color.Yellow,
+	color.Blue,
+	color.Green,
 }
