@@ -65,7 +65,6 @@ func (c *playerController) tryTopDecking(gameState State, deck *Deck) card.Card 
 		c.hand.RemoveCard(extraCard)
 		return extraCard
 	}
-	ui.Message.PlayerPassed(c.player.Name())
 	return nil
 }
 

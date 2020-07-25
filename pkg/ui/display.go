@@ -18,5 +18,5 @@ func Printlns(lines []string) {
 
 func Println(args ...interface{}) {
 	fmt.Fprintln(color.Stdout, args...)
-	time.Sleep(2 * time.Second)
+	time.Sleep(1 * time.Second)
 }

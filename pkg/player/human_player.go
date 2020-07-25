@@ -17,6 +17,7 @@ func NewHumanPlayer(name string) game.Player {
 	event.FirstCardPlayed.AddListener(player)
 	event.CardPlayed.AddListener(player)
 	event.ColorPicked.AddListener(player)
+	event.PlayerPassed.AddListener(player)
 	return player
 }
 
@@ -42,6 +43,10 @@ func (p humanPlayer) OnCardPlayed(payload event.CardPlayedPayload) {
 
 func (p humanPlayer) OnColorPicked(payload event.ColorPickedPayload) {
 	ui.Message.PlayerPickedColor(payload.PlayerName, payload.Color)
+}
+
+func (p humanPlayer) OnPlayerPassed(payload event.PlayerPassedPayload) {
+	ui.Message.PlayerPassed(payload.PlayerName)
 }
 
 func (p humanPlayer) NotifyCardsDrawn(cards []card.Card) {
