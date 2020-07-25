@@ -53,7 +53,9 @@ func (g *Game) dealStartingCards() {
 func (g *Game) playFirstCard() {
 	firstCard := g.deck.DrawOne()
 	g.pile.Add(firstCard)
-	ui.Message.FirstCardPlayed(firstCard)
+	event.FirstCardPlayed.Emit(event.FirstCardPlayedPayload{
+		Card: firstCard,
+	})
 	g.performCardActions(firstCard)
 }
 

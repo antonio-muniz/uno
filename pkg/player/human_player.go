@@ -14,6 +14,7 @@ type humanPlayer struct {
 
 func NewHumanPlayer(name string) game.Player {
 	player := humanPlayer{basicPlayer: basicPlayer{name: name}}
+	event.FirstCardPlayed.AddListener(player)
 	event.CardPlayed.AddListener(player)
 	return player
 }
@@ -28,6 +29,10 @@ func (p humanPlayer) Play(playableCards []card.Card, gameState game.State) card.
 	ui.Println(gameState)
 	card := ui.PromptCardSelection(playableCards)
 	return card
+}
+
+func (p humanPlayer) OnFirstCardPlayed(payload event.FirstCardPlayedPayload) {
+	ui.Message.FirstCardPlayed(payload.Card)
 }
 
 func (p humanPlayer) OnCardPlayed(payload event.CardPlayedPayload) {

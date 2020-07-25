@@ -9,26 +9,24 @@ import (
 	"github.com/stretchr/testify/require"
 )
 
-func TestCardPlayed(t *testing.T) {
+func TestFirstCardPlayed(t *testing.T) {
 	listenerOne := event.NewDummyListener()
 	listenerTwo := event.NewDummyListener()
 
-	event.CardPlayed.AddListener(listenerOne)
-	event.CardPlayed.AddListener(listenerTwo)
+	event.FirstCardPlayed.AddListener(listenerOne)
+	event.FirstCardPlayed.AddListener(listenerTwo)
 
-	payloads := []event.CardPlayedPayload{
+	payloads := []event.FirstCardPlayedPayload{
 		{
-			PlayerName: "Someone",
-			Card:       card.NewWildCard(),
+			Card: card.NewWildCard(),
 		},
 		{
-			PlayerName: "Somebody",
-			Card:       card.NewDrawTwoCard(color.Green),
+			Card: card.NewDrawTwoCard(color.Green),
 		},
 	}
 
 	for _, payload := range payloads {
-		event.CardPlayed.Emit(payload)
+		event.FirstCardPlayed.Emit(payload)
 	}
 
 	require.ElementsMatch(t, payloads, listenerOne.ReceivedPayloads())
