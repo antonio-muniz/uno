@@ -4,7 +4,6 @@ import (
 	"github.com/antonio-muniz/uno/pkg/card"
 	"github.com/antonio-muniz/uno/pkg/card/action"
 	"github.com/antonio-muniz/uno/pkg/event"
-	"github.com/antonio-muniz/uno/pkg/ui"
 )
 
 type Game struct {
@@ -75,7 +74,10 @@ func (g *Game) performCardActions(playedCard card.Card) {
 			color := player.PickColor(gameState)
 			coloredCard := card.NewColoredCard(playedCard, color)
 			g.pile.ReplaceTop(coloredCard)
-			ui.Message.PlayerPickedColor(player.Name(), color)
+			event.ColorPicked.Emit(event.ColorPickedPayload{
+				PlayerName: player.Name(),
+				Color:      color,
+			})
 		}
 	}
 }

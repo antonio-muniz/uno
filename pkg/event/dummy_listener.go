@@ -19,3 +19,7 @@ func (l *DummyListener) OnCardPlayed(payload CardPlayedPayload) {
 func (l *DummyListener) OnFirstCardPlayed(payload FirstCardPlayedPayload) {
 	l.receivedPayloads = append(l.receivedPayloads, payload)
 }
+
+func (l *DummyListener) OnColorPicked(payload ColorPickedPayload) {
+	l.receivedPayloads = append(l.receivedPayloads, payload)
+}
